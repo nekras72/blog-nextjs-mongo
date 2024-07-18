@@ -14,12 +14,12 @@ const Navbar: React.FC = () => {
                 <Image src="/linkedin.png" alt="linkedin" width={24} height={24} />
                 <Image src="/github.png" alt="github" width={24} height={24} />
             </div>
-            <div className={styles.logo}>My logo</div>
+            <div className={styles.logo}>Olim Dev Blog</div>
             <div className={styles.links}>
                 <ThemeToggler />
-                <Link href="/">Homepage</Link>
-                <Link href="/">Contact</Link>
-                <Link href="/">About</Link>
+                <Link className={styles.link} href="/">Homepage</Link>
+                <Link className={styles.link} href="/">Contact</Link>
+                <Link className={styles.link} href="/">About</Link>
                 <AuthLinks />
             </div>
         </div>

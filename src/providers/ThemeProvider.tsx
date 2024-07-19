@@ -1,11 +1,8 @@
 "use client"
 
 import ThemeContext from "@/context/ThemeContext";
+import { IChildren } from "@/types";
 import { useContext, useEffect, useState } from "react";
-
-interface IChildren {
-    children: React.ReactNode | React.ReactNode[];
-}
 
 const ThemeProvider: React.FC<IChildren> = ({ children }) => {
     const { theme } = useContext(ThemeContext);

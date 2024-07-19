@@ -1,9 +1,6 @@
 "use client";
+import { IChildren } from "@/types";
 import { createContext, Dispatch, useEffect, useState } from "react";
-
-interface IChildren {
-    children: React.ReactNode | React.ReactNode[];
-}
 
 type ThemeType = "light" | "dark";
 

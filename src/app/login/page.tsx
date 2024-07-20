@@ -2,7 +2,6 @@
 import { signIn, useSession } from 'next-auth/react';
 import styles from './loginPage.module.css';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 const LoginPage = () => {
     const { status } = useSession();

@@ -2,6 +2,11 @@ import React from "react";
 import styles from './categoryList.module.css';
 import Link from "next/link";
 import Image from "next/image";
+import { fetchData } from "next-auth/client/_utils";
+
+const getData = async () => {
+    // const res = await fetchData()
+}
 
 const CategoryList: React.FC = () => {
     return (

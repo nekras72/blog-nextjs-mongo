@@ -1,4 +1,4 @@
-.categoryList{
+.categoryList {
     margin-top: 35px;
     margin-bottom: 60px;
     display: flex;
@@ -7,31 +7,31 @@
 }
 
 .categoryItem {
-padding: 10px 25px;
-border-radius: 10px;
-font-size: 14px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 14px;
 }
 
 .categoryItem.travel {
-background-color: #ff7857;
+    background-color: #ff7857;
 }
 
-.categoryItem.fasion {
-background-color: #ff7887;
+.categoryItem.fashion {
+    background-color: #ff7887;
 }
 
 .categoryItem.culture {
-background-color: #ffb14f;
+    background-color: #ffb14f;
 }
 
 .categoryItem.food {
-background-color: #7fb881;
+    background-color: #7fb881;
 }
 
 .categoryItem.coding {
-background-color: #775aec;
+    background-color: #775aec;
 }
 
 .categoryItem.style {
-background-color: #789cff;
+    background-color: #789cff;
 }

@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Blog App',
-  description: 'Interesting blog app!',
+  description: 'Blog app by Ilia Nekrasov!',
 }
 
 interface RootLayoutProps {

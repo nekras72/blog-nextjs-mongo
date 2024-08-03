@@ -7,6 +7,11 @@ import { signOut, useSession } from 'next-auth/react';
 const AuthLinks = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { status } = useSession();
+
+  const handleCloseMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       {status === 'unauthenticated' ? (
@@ -27,15 +32,15 @@ const AuthLinks = () => {
       </button>
       {isOpen &&
         <div className={styles.responsiveMenu}>
-          <Link href="/">Homepage</Link>
-          <Link href="/">About</Link>
-          <Link href="/">Contact</Link>
+          <Link onClick={handleCloseMenu} href="/">Homepage</Link>
+          <Link onClick={handleCloseMenu} href="/">About</Link>
+          <Link onClick={handleCloseMenu} href="/">Contact</Link>
           {status === 'unauthenticated' ? (
-            <Link href="/login" onClick={() => setIsOpen(state => !state)}>Login</Link>
+            <Link href="/login" onClick={handleCloseMenu}>Login</Link>
           ) : (
             <>
-              <Link href="/write">Write</Link>
-              <span style={{ cursor: 'pointer'}} onClick={() => signOut()} >Logout</span>
+              <Link onClick={handleCloseMenu} href="/write">Write</Link>
+              <span style={{ cursor: 'pointer' }} onClick={() => signOut()} >Logout</span>
             </>
           )}
         </div>}

@@ -12,7 +12,7 @@ const Card: React.FC<ICard> = ({ postData }) => {
     return (
         <div className={styles.container}>
             {postData.img && <div className={styles.imageContainer}>
-                <Image className={styles.image} src={postData.img} alt="p1" fill />
+                <Image className={styles.image} src={postData.img} alt="" fill />
             </div>}
             <div className={styles.textContainer}>
                 <div className={styles.detail}>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Comments from '@/components/comments/Comments';
 import { Post } from '@/types';
 import { getPrettyDate } from '@/helpers';
+import DeletePostButton from '@/components/deletePostButton/DeletePostButton';
 
 const getData = async (slug: string) => {
   const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
@@ -11,7 +12,7 @@ const getData = async (slug: string) => {
   });
 
   if (!res.ok) {
-    throw new Error('failed to get categories');
+    console.log(new Error('failed to get post data'));
   }
 
   return res.json();
@@ -26,7 +27,12 @@ interface ISinglePostPage {
 const SinglePostPage: React.FC<ISinglePostPage> = async ({ params }) => {
   const { slug } = params;
   const postData: Post = await getData(slug);
-  return (
+  const hasProperData = Object.hasOwn(postData, 'title') &&
+    Object.hasOwn(postData, 'user') &&
+    Object.hasOwn(postData, 'createdAt') &&
+    Object.hasOwn(postData, 'desc');
+
+  return !hasProperData ? (<p>Post does not exist or you should check your internet</p>) : (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
@@ -50,6 +56,7 @@ const SinglePostPage: React.FC<ISinglePostPage> = async ({ params }) => {
           {postData?.desc && <div
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: postData.desc }} />}
+          <DeletePostButton slug={slug} />
           <div className={styles.comments}>
             <Comments postSlug={slug} />
           </div>

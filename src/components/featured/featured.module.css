@@ -41,6 +41,8 @@
 }
 
 .postButton {
+    color: black;
+    background-color: #f0f0f0;
     padding: 16px 20px;
     border: none;
     border-radius: 10px;
@@ -58,8 +60,12 @@
         font-size: 64px;
     }
 
+    .post {
+        flex-direction: column;
+    }
     .imageContainer {
-        display: none;
+        flex: auto;
+        width: 100%;
     }
 }
 

@@ -1,4 +1,4 @@
-.title{
+.title {
     margin: 50px 0;
 }
 
@@ -17,24 +17,6 @@
     justify-content: center;
     gap: 10px;
     border-radius: 10px;
-}
-.category.style {
-    background-color: #57c4ff31;
-}
-.category.travel {
-    background-color: #ff795736;
-}
-.category.culture {
-    background-color: #ffb04f45;
-}
-.category.coding {
-    background-color: #5e4fff31;
-}
-.category.food {
-    background-color: #7fb88133;
-}
-.category.fashion {
-    background-color: #da85c731;
 }
 
 .image {

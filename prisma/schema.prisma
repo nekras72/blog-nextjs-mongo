@@ -18,6 +18,7 @@ model Category {
   slug String @unique
   title String
   img String?
+  color String @unique
   Posts Post[]
 }
 
@@ -35,6 +36,8 @@ model Post {
   user User @relation(fields: [userEmail], references: [email])
 
   comments Comment[]
+  editorPick Boolean @default(false)
+  featured Boolean @default(false)
 }
 
 model User {

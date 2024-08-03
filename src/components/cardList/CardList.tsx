@@ -11,14 +11,13 @@ const getData = async ({ page, cat }: SearchParams) => {
     });
 
     if (!res.ok) {
-        throw new Error('failed to get categories');
+        throw new Error('failed to get posts');
     }
 
     return res.json();
 }
 
 const CardList: React.FC<SearchParams> = async ({ page, cat }) => {
-    console.log(cat);
 
     const { posts, count } = await getData({ page, cat });
     const hasNext = page * POSTS_PER_PAGE < count;

@@ -6,6 +6,7 @@ import { Metadata } from 'next/types';
 import { ThemeContextProvider } from '@/context/ThemeContext';
 import ThemeProvider from '@/providers/ThemeProvider';
 import AuthProvider from '@/providers/AuthProvider';
+import { CategoriesContextProvider } from '@/context/CategoriesContext';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,13 +26,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>
-              <div className="container">
-                <div className="wrapper">
-                  <Navbar />
-                  {children}
-                  <Footer />
+              <CategoriesContextProvider>
+                <div className="container">
+                  <div className="wrapper">
+                    <Navbar />
+                    {children}
+                    <Footer />
+                  </div>
                 </div>
-              </div>
+              </CategoriesContextProvider>
             </ThemeProvider>
           </ThemeContextProvider>
         </AuthProvider>

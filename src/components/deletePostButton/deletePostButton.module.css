@@ -1,0 +1,15 @@
+.buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button {
+    background-color: crimson;
+    color: var(--bg);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}

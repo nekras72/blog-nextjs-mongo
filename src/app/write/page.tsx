@@ -7,9 +7,11 @@ import Image from 'next/image';
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import { slugify, uploadFile } from '@/helpers';
-import { NewPost } from '@/types';
+import { NewCat, NewPost } from '@/types';
+import useCategories from '@/hooks/useCategories';
 
 const WritePage = () => {
+  const { categories, triggerUpdateCategories } = useCategories();
   const { status } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -19,9 +21,23 @@ const WritePage = () => {
   const [title, setTitle] = useState('');
   const [catSlug, setCatSlug] = useState('');
 
-  useEffect(() => {
-    file && uploadFile({ file, setMedia });
-  }, [file]);
+  const [isCreatingNewCategory, setIsCreatingNewCategory] = useState(false);
+  const [newCatTitle, setNewCatTitle] = useState('');
+  const [newCatColor, setNewCatColor] = useState('');
+  const [catFile, setCatFile] = useState<File | null>(null);
+  const [catUrl, setCatUrl] = useState(categories?.[0]?.slug ?? '');
+
+  const cleanUpSuccessLoading = () => {
+    setCatFile(null);
+    setCatUrl('');
+    setNewCatTitle('')
+    setIsCreatingNewCategory(false);
+    setNewCatColor('');
+  }
+
+  const isDisabledCreateCategory = isCreatingNewCategory && (newCatTitle.trim() === '' || newCatColor === '' || catFile === null);
+
+  // TODO change upload flow (pass success callback to uploadFile)
 
   const handleSubmit = async () => {
     const bodyObj: NewPost = {
@@ -37,13 +53,40 @@ const WritePage = () => {
       method: 'POST',
       body: JSON.stringify(bodyObj)
     });
-    console.log({ response });
 
     if (response.status === 200) {
       const data = await response.json();
       router.push(`/posts/${data.slug}`);
     }
   };
+
+  const handleCreateNewCategory = async () => {
+    if (!isCreatingNewCategory) {
+      setIsCreatingNewCategory(state => !state);
+    } else {
+      const bodyObj: NewCat = {
+        slug: slugify(newCatTitle),
+        title: newCatTitle,
+        img: catUrl,
+        color: newCatColor
+      };
+      const response = await fetch('/api/categories', {
+        method: 'POST',
+        body: JSON.stringify(bodyObj)
+      });
+
+      if (response.status === 200) {
+        cleanUpSuccessLoading();
+        triggerUpdateCategories();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (file) {
+      uploadFile({ file, setMedia });
+    } else if (catFile) uploadFile({ file: catFile, setMedia: setCatUrl, catName: newCatTitle });
+  }, [file, catFile]);
 
   if (status === 'loading') {
     return <div className={styles.loading}>Loading...</div>
@@ -55,14 +98,46 @@ const WritePage = () => {
   return (
     <div className={styles.container}>
       <input className={styles.input} placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
-        <option value="style">style</option>
-        <option value="fashion">fashion</option>
-        <option value="food">food</option>
-        <option value="culture">culture</option>
-        <option value="travel">travel</option>
-        <option value="coding">coding</option>
-      </select>
+      <div className={styles.categoryActionsContainer}>
+        {categories && <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
+          {categories.map((cat) => (<option key={cat._id} value={cat.slug}>{cat.title}</option>))}
+          {/* <option value="style">style</option>
+          <option value="fashion">fashion</option>
+          <option value="food">food</option>
+          <option value="culture">culture</option>
+          <option value="travel">travel</option>
+          <option value="coding">coding</option> */}
+        </select>}
+        <button disabled={isDisabledCreateCategory} onClick={handleCreateNewCategory} className={styles.createCategoryButton}>Create Category</button>
+      </div>
+      <div className={styles.newCategoryDataPlaceholder}>
+        {isCreatingNewCategory && <div className={styles.newCategoryDataContainer}>
+          <input
+            placeholder="Category name"
+            value={newCatTitle}
+            onChange={(e) => setNewCatTitle(e.target.value)}
+            className={styles.newCategoryInput}
+            type="text"
+          />
+          <input
+            placeholder="Category color"
+            value={newCatColor}
+            onChange={(e) => setNewCatColor(e.target.value)}
+            className={styles.newCategoryColorInput}
+            type="color"
+          />
+          <button disabled={newCatTitle.trim() === ''} className={styles.newCategoryImageButton}>
+            <label htmlFor="catImage">Add Image</label>
+          </button>
+          <button onClick={() => setIsCreatingNewCategory(false)} className={styles.newCategoryImageButton}>X</button>
+          <input
+            className={styles.hiddenElement}
+            type="file"
+            id='catImage'
+            onChange={(e) => setCatFile(e.target.files?.[0] || null)}
+          />
+        </div>}
+      </div>
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setIsOpen(state => !state)}>
           <Image
@@ -107,13 +182,15 @@ const WritePage = () => {
               />
             </button>
           </div>}
-        <ReactQuill
-          className={styles.textArea}
-          theme='bubble'
-          value={text}
-          onChange={setText}
-          placeholder='Tell your story'
-        />
+        <div className={styles.textAreaContainer}>
+          <ReactQuill
+            className={styles.textArea}
+            theme='bubble'
+            value={text}
+            onChange={setText}
+            placeholder='Tell your story'
+          />
+        </div>
       </div>
       <button className={styles.publish} onClick={handleSubmit}>Publish</button>
     </div>

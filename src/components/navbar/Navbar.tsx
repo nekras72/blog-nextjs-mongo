@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
                 <ThemeToggler />
                 <Link className={styles.link} href="/">Homepage</Link>
                 <Link className={styles.link} href="/">Contact</Link>
-                <Link className={styles.link} href="/">About</Link>
+                <Link className={styles.link} href="/about">About</Link>
                 <AuthLinks />
             </div>
         </div>

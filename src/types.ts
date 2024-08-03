@@ -8,6 +8,7 @@ export type Category = {
     title: string,
     img: string,
     posts: Post[],
+    color: string
 }
 
 export type Post = {
@@ -26,6 +27,7 @@ export type Post = {
 }
 
 export type NewPost = Omit<Post, '_id' | 'createdAt' | 'views' | 'cat' | 'user' | 'userEmail' | 'comments'>
+export type NewCat = Omit<Category, '_id' | 'posts'>
 
 export type User = {
     name: string,

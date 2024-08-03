@@ -1,15 +1,28 @@
 import Link from "next/link";
 import styles from './menuCategories.module.css';
+import { Category } from "@/types";
 
-const MenuCategories = () => {
+const getCategories = async () => {
+  const res = await fetch('http://localhost:3000/api/categories', {
+    cache: 'reload',
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    throw new Error('failed to get Categories at MenuCategories');
+  }
+
+  return res.json();
+};
+
+const MenuCategories = async () => {
+  const categories: Category[] | undefined = await getCategories();
+
   return (
     <div className={styles.categoryList}>
-      <Link href="/blog?cat=style" className={`${styles.categoryItem} ${styles.style}`}>Style</Link>
-      <Link href="/blog?cat=food" className={`${styles.categoryItem} ${styles.food}`}>Food</Link>
-      <Link href="/blog?cat=travel" className={`${styles.categoryItem} ${styles.travel}`}>Travel</Link>
-      <Link href="/blog?cat=fashion" className={`${styles.categoryItem} ${styles.fashion}`}>Fashion</Link>
-      <Link href="/blog?cat=culture" className={`${styles.categoryItem} ${styles.culture}`}>Culture</Link>
-      <Link href="/blog?cat=coding" className={`${styles.categoryItem} ${styles.coding}`}>Coding</Link>
+      {categories && categories.map((cat) => (
+        <Link key={cat._id} href={`/blog?cat=${cat.slug}`} style={{ backgroundColor: cat.color }} className={styles.categoryItem}>{cat.title}</Link>
+      ))}
     </div>
   )
 };

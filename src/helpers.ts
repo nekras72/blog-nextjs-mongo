@@ -8,11 +8,12 @@ export const getPrettyDate = (dateStr: string) => {
 }
 interface IUploadFile {
     file: File,
-    setMedia: Dispatch<SetStateAction<string>>
+    setMedia: Dispatch<SetStateAction<string>>,
+    catName?: string
 }
-export const uploadFile = ({ file, setMedia }: IUploadFile) => {
+export const uploadFile = ({ file, setMedia, catName }: IUploadFile) => {
     const storage = getStorage(firebaseApp);
-    const uniqueName = `${new Date().getTime}-${file.name}`
+    const uniqueName = `${new Date().getTime()}-${catName ? `${catName.toLowerCase()}-` : ''}${file.name}`
     const storageRef = ref(storage, uniqueName);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -52,3 +53,4 @@ export const uploadFile = ({ file, setMedia }: IUploadFile) => {
 export const slugify = (str: string): string => {
     return str.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
 }
+

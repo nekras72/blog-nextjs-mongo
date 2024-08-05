@@ -38,8 +38,6 @@ export const POST = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
     const updateParam = searchParams.get('updateParam');
     const body = await req.json();
-    console.log(body);
-
 
     switch (updateParam) {
         case 'category':

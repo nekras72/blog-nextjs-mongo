@@ -11,8 +11,8 @@ import { CategoriesContextProvider } from '@/context/CategoriesContext';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Blog App',
-  description: 'Blog app by Ilia Nekrasov!',
+  title: 'Web cheat sheet',
+  description: 'Web cheat sheet by Ilia Nekrasov!',
 }
 
 interface RootLayoutProps {

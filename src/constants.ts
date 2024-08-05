@@ -1,34 +1,4 @@
 export const POSTS_PER_PAGE = 4;
 
-const COLORS_OF_CATEGORIES = [
-    '#68bcee31',
-    '#95a8c131',
-    '#c1949531',
-    '#ee806831',
-    '#ff7e5631',
-    '#ff8d5431',
-    '#ff9c5231',
-    '#ffab5031',
-    '#efa66131',
-    '#c48c9031',
-    '#9973be31',
-    '#6e59ed31',
-    '#615af231',
-    '#6a76d131',
-    '#7392af31',
-    '#7cae8e31',
-    '#88b38831',
-    '#a0a59b31',
-    '#b998ad31',
-    '#d18ac031',
-    '#cd8bcd31',
-    '#aa9cdc31',
-    '#87adea31',
-    '#64bef931',
-    "#57c4ff31",
-    "#ff795736",
-    "#ffb04f45",
-    "#5e4fff31",
-    "#7fb88133",
-    "#da85c731"
-]
+export const ADMIN_ROLE = 'admin';
+export const READER_ROLE = 'reader';

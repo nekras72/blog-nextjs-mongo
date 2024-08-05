@@ -49,6 +49,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post Post[]
+  role String @default("reader")
 
   Comment Comment[]
 }

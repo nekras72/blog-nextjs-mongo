@@ -5,17 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import useSWR from 'swr';
 import { Comment } from '@/types';
-import { getPrettyDate } from '@/helpers';
+import { getPrettyDate, swrFetcher } from '@/helpers';
 import { useState } from 'react';
-
-const fetcher = async (url: string) => {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (!res.ok) {
-        throw new Error(data.message);
-    };
-    return data;
-};
+import Loader from '../loader/Loader';
 
 interface IComments {
     postSlug: string
@@ -24,7 +16,7 @@ interface IComments {
 const Comments: React.FC<IComments> = ({ postSlug }) => {
     const { status } = useSession();
 
-    const { data: comments, mutate, isLoading } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, fetcher);
+    const { data: comments, mutate, isLoading } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, swrFetcher);
 
     const [desc, setDesc] = useState<string>('');
 
@@ -46,7 +38,7 @@ const Comments: React.FC<IComments> = ({ postSlug }) => {
                 </div>) :
                 (<Link href="/login">Login to write a comment</Link>)}
             <div className={styles.comments}>
-                {isLoading ? <div className={styles.loader} /> : comments?.map((item: Comment) => (
+                {isLoading ? <Loader /> : comments?.map((item: Comment) => (
                     <div key={item._id} className={styles.comment}>
                         <div className={styles.user}>
                             {item.user.image && <Image

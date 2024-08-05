@@ -3,7 +3,7 @@ export interface IChildren {
 }
 
 export type Category = {
-    _id: string,
+    id: string,
     slug: string,
     title: string,
     img: string,
@@ -27,7 +27,10 @@ export type Post = {
 }
 
 export type NewPost = Omit<Post, '_id' | 'createdAt' | 'views' | 'cat' | 'user' | 'userEmail' | 'comments'>
-export type NewCat = Omit<Category, '_id' | 'posts'>
+export type NewCat = Omit<Category, 'id' | 'posts'>;
+export type UpdateCat = Partial<Omit<Category, 'id' | 'posts'>> & {
+    oldSlug?: string;
+};
 
 export type User = {
     name: string,

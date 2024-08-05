@@ -13,7 +13,7 @@
 
 .logo {
     text-align: center;
-    flex: 1;
+    flex: 2;
     font-weight: bold;
     font-style: 36px;
 }
@@ -21,12 +21,12 @@
 .links {
     display: flex;
     gap: 20px;
-    flex: 1;
+    flex: 3;
     font-size: 20px;
     align-items: center;
 }
 
-@media screen and (max-width:1280px) {
+@media screen and (max-width: 1280px) {
     .logo {
         font-size: 32px;
     }
@@ -36,7 +36,7 @@
     }
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width: 1024px) {
     .social {
         display: none;
     }
@@ -45,13 +45,13 @@
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
     .logo {
         font-size: 24px;
     }
 }
 
-@media screen and (max-width:640px) {
+@media screen and (max-width: 640px) {
     .links {
         justify-content: flex-end;
     }

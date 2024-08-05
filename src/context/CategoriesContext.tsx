@@ -4,12 +4,14 @@ import { createContext, useEffect, useState } from "react";
 
 interface ICategoriesContext {
     categories: Category[],
-    triggerUpdateCategories: () => void
+    triggerUpdateCategories: () => void,
+    isLoadingCategories: boolean
 }
 
 const initialContextValue = {
     triggerUpdateCategories: () => undefined,
-    categories: []
+    categories: [],
+    isLoadingCategories: false
 };
 
 const CategoriesContext = createContext<ICategoriesContext>(initialContextValue);
@@ -29,20 +31,22 @@ const getData = async () => {
 
 const CategoriesContextProvider: React.FC<IChildren> = ({ children }) => {
     const [categories, setCategories] = useState<Category[]>([]);
+    const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(false);
 
     const triggerUpdateCategories = async () => {
+        setIsLoadingCategories(true);
         const data = await getData();
         if (data) {
-            console.log({ cats: data });
             setCategories(data)
         }
+        setIsLoadingCategories(false);
     }
 
     useEffect(() => {
         triggerUpdateCategories()
     }, []);
 
-    return <CategoriesContext.Provider value={{ categories, triggerUpdateCategories }}>
+    return <CategoriesContext.Provider value={{ categories, triggerUpdateCategories, isLoadingCategories }}>
         {children}
     </CategoriesContext.Provider>
 };

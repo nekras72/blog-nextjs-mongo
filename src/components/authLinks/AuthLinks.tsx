@@ -3,8 +3,10 @@ import Link from 'next/link';
 import styles from './authLinks.module.css';
 import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
+import useUser from '@/hooks/useUser';
 
 const AuthLinks = () => {
+  const { isAdmin } = useUser();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { status } = useSession();
 
@@ -18,7 +20,10 @@ const AuthLinks = () => {
         <Link className={styles.link} href="/login">Login</Link>
       ) : (
         <>
-          <Link className={styles.link} href="/write">Write</Link>
+          {isAdmin && <>
+            <Link className={styles.link} href="/write">Write</Link>
+            <Link onClick={handleCloseMenu} href="/manage">Manage</Link>
+          </>}
           <span className={styles.link} onClick={() => signOut()} >Logout</span>
         </>
       )}
@@ -32,14 +37,17 @@ const AuthLinks = () => {
       </button>
       {isOpen &&
         <div className={styles.responsiveMenu}>
-          <Link onClick={handleCloseMenu} href="/">Homepage</Link>
+          <Link onClick={handleCloseMenu} href="/">Home</Link>
           <Link onClick={handleCloseMenu} href="/">About</Link>
           <Link onClick={handleCloseMenu} href="/">Contact</Link>
           {status === 'unauthenticated' ? (
             <Link href="/login" onClick={handleCloseMenu}>Login</Link>
           ) : (
             <>
-              <Link onClick={handleCloseMenu} href="/write">Write</Link>
+              {isAdmin && <>
+                <Link onClick={handleCloseMenu} href="/write">Write</Link>
+                <Link onClick={handleCloseMenu} href="/manage">Manage</Link>
+              </>}
               <span style={{ cursor: 'pointer' }} onClick={() => signOut()} >Logout</span>
             </>
           )}

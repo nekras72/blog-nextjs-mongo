@@ -1,19 +1,23 @@
 "use client"
 import styles from './writePage.module.css';
 import 'react-quill/dist/quill.bubble.css';
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import { slugify, uploadFile } from '@/helpers';
 import { NewCat, NewPost } from '@/types';
 import useCategories from '@/hooks/useCategories';
+import useUser from '@/hooks/useUser';
 
 const WritePage = () => {
+  const { isAdmin } = useUser();
+
+  if (!isAdmin) {
+    redirect('/');
+  }
+
   const { categories, triggerUpdateCategories } = useCategories();
-  const { status } = useSession();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
@@ -56,7 +60,7 @@ const WritePage = () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      router.push(`/posts/${data.slug}`);
+      redirect(`/posts/${data.slug}`);
     }
   };
 
@@ -88,25 +92,12 @@ const WritePage = () => {
     } else if (catFile) uploadFile({ file: catFile, setMedia: setCatUrl, catName: newCatTitle });
   }, [file, catFile]);
 
-  if (status === 'loading') {
-    return <div className={styles.loading}>Loading...</div>
-  }
-
-  if (status === 'unauthenticated') {
-    router.push('/');
-  }
   return (
     <div className={styles.container}>
       <input className={styles.input} placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
       <div className={styles.categoryActionsContainer}>
         {categories && <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
-          {categories.map((cat) => (<option key={cat._id} value={cat.slug}>{cat.title}</option>))}
-          {/* <option value="style">style</option>
-          <option value="fashion">fashion</option>
-          <option value="food">food</option>
-          <option value="culture">culture</option>
-          <option value="travel">travel</option>
-          <option value="coding">coding</option> */}
+          {categories.map((cat) => (<option key={cat.id} value={cat.slug}>{cat.title}</option>))}
         </select>}
         <button disabled={isDisabledCreateCategory} onClick={handleCreateNewCategory} className={styles.createCategoryButton}>Create Category</button>
       </div>

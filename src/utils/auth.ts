@@ -3,7 +3,6 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "./connect";
 import { getServerSession, Session } from 'next-auth';
-import { Session } from 'inspector';
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -26,9 +25,5 @@ export const authOptions = {
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
 };
-
-interface ISession {
-    userEmail: string
-}
 
 export const getAuthSession = (): Promise<Session | null> => getServerSession(authOptions)

@@ -25,10 +25,9 @@ export const GET = async (req: NextRequest, { params }: { params: IParams }) => 
 }
 
 export const DELETE = async (req: NextRequest, { params }: { params: IParams }) => {
-    console.log({ params });
 
     const session = await getAuthSession();
-    const slug = params.slug;
+    const { slug } = params;
 
     try {
         const post = await prisma.post.findUnique({

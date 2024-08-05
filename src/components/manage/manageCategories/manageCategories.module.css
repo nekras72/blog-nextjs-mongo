@@ -1,0 +1,115 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.allCategories {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.catManageButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border: none;
+    cursor: pointer;
+}
+
+.catManageButton.edit {
+    background-color: rgba(240, 235, 91);
+}
+
+.catManageButton.edit:hover {
+    background-color: rgba(240, 235, 91, 0.5);
+}
+
+.catManageButton.remove {
+    background-color: rgba(220, 20, 60);
+}
+
+.catManageButton.remove:hover {
+    background-color: rgba(220, 20, 60, 0.5);
+}
+
+.catManageButton.close {
+    background-color: rgba(91, 240, 113);
+}
+
+.catManageButton.close:hover {
+    background-color: rgba(91, 240, 113, 0.5);
+}
+
+.catManageButtonsContainer {
+    width: 100px;
+    height: 50px;
+    background: var(--softTextColor);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.category {
+    cursor: pointer;
+    color: var(--textColor);
+    border: none;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.createCategoryButton {
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: max-content;
+}
+
+.newCategoryDataPlaceholder {
+    height: 100px;
+}
+.newCategoryStatus {
+    height: 60px;
+}
+.newCategoryDataContainer {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.newCategoryInput {
+    width: 120px;
+    height: 40px;
+    padding: 10px 10px;
+}
+
+.newCategoryColorInput {
+    height: 40px;
+    width: 80px;
+}
+
+.newCategoryImageButton {
+    cursor: pointer;
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px 10px;
+    width: max-content;
+}
+
+.image {
+    border-radius: 50%;
+}
+
+.hiddenElement {
+    display: none;
+}

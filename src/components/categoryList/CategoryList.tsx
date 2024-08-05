@@ -25,7 +25,7 @@ const CategoryList: React.FC = async () => {
             <div className={styles.categories}>
                 {data && data.map((item) => {
                     return (
-                        <Link style={{ backgroundColor: item.color }} className={styles.category} href={`/blog?cat=${item.slug}`} key={item._id}>
+                        <Link style={{ backgroundColor: item.color }} className={styles.category} href={`/blog?cat=${item.slug}`} key={item.id}>
                             {item.img &&
                                 <Image
                                     className={styles.image}

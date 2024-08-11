@@ -60,6 +60,7 @@ export const POST = async (req: NextRequest) => {
                             slug: cat.slug
                         },
                         data: { ...data }
+
                     });
                     return new NextResponse(JSON.stringify(cat), { status: 200 });
                 } catch (err) {

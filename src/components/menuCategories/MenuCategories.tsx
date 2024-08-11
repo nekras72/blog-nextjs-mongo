@@ -21,7 +21,7 @@ const MenuCategories = async () => {
   return (
     <div className={styles.categoryList}>
       {categories && categories.map((cat) => (
-        <Link key={cat._id} href={`/blog?cat=${cat.slug}`} style={{ backgroundColor: cat.color }} className={styles.categoryItem}>{cat.title}</Link>
+        <Link key={cat.id} href={`/blog?cat=${cat.slug}`} style={{ backgroundColor: cat.color }} className={styles.categoryItem}>{cat.title}</Link>
       ))}
     </div>
   )
